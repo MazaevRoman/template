@@ -28,7 +28,7 @@
 	width: 100%;
 }
 
-.header_navigation a {
+.item {
 	display: block;
 	line-height: 60px;
 	font-size: 17px;
@@ -38,14 +38,11 @@
 	transition: all 0.2s linear;
 	color: #ffffff;
 	text-decoration: none;
-}
-
-.item {
 	float: left;
 	padding: 0 15px;
 }
 
-.header_navigation a:hover {
+.item:hover {
 	background: rgba(0,0,0,0.1);
 }
 
@@ -99,7 +96,37 @@
 }
 
 .content {
-	grid-row: 2 / 3;
+	gap: 3em;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	margin: auto;
+	margin-bottom: 5%;
+}
+
+.box {
+	padding: 3%;
+	margin-top: 20%;
+	margin-left: 10%;
+	margin-right: 10%;
+	width: max-content;
+	height: max-content;
+	border: #41B3A3 2px solid;
+}
+
+.box_image {
+	width: auto;
+	max-height: 100%;
+}
+
+.cover {
+	height: 200px;
+ 	width: 200px;
+}
+
+.auditions{
+	margin-left: auto;
+	font-size: 0.75rem;
+	line-height: 20px;
 }
 
 .footer {
@@ -111,4 +138,19 @@
 .mark {
 	font-size: 15px;
 	color:  #ffffff;
+}
+
+@media (max-width: 1024px) and (max-height: 768px) {
+    .content {
+		gap: 1em;
+		font-size: smaller;
+		grid-template-columns: 1fr 1fr;
+	}
+	.box{
+		margin: 5%;
+	}
+	.cover {
+		height: 160px;
+		width: 160px;
+	}
 }
