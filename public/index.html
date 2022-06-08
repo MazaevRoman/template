@@ -8,13 +8,13 @@
   </head>
   <body class="app">
     <header class="header">
-      <a  href="">
+      <a  href="index.html">
         <img class="header__logo" src="images/icon-menu.png" alt="Logo" width="47px" height="47px">
       </a>
       <nav class="header_navigation">
-        <a class="item" href="">Главная</a>
-        <a class="item" href="">Коллекция</a>
-        <a class="item" href="">Подкасты</a>
+        <a class="item" href="index.html">Главная</a>
+        <a class="item" onclick="setTopMusicSettings()">Коллекция</a>
+        <a class="item" onclick="setTopArtistsSettings()">Авторы</a>
       </nav>
       <div class="header__search">
         <input class="search-bar" type="text" placeholder="Трек, альбом, исполнитель">
@@ -22,77 +22,7 @@
     </header>
   
     <main class="content">
-      <div class="box">
-        <div class="box_image">
-          <img class="cover" src="images/azari.jpg" alt="Nightmare" /> 
-        </div>
-
-        <div>
-          <div class="name">Nightmare</div>
-          <div class="author">Azari</div>
-          <div class="auditions">10000 прослушиваний</div>
-        </div>
-      </div>
-
-      <div class="box">
-        <div class="box_image">
-          <img class="cover" src="images/geroi.jpg" alt="Нам не нужен герой" />
-        </div>
-
-        <div>
-          <div class="name">Нам не нужен герой</div>
-          <div class="author">Би-2</div>
-          <div class="auditions">19000 прослушиваний</div>
-        </div>
-      </div>
-
-      <div class="box">
-        <div class="box_image">
-          <img class="cover" src="images/gokki.jpg" alt="Мышеловка" />
-        </div>
-
-        <div>
-          <div class="name">Мышеловка</div>
-          <div class="author">Гокки</div>
-          <div class="auditions">10000 прослушиваний</div>
-        </div>
-      </div>
-
-      <div class="box">
-        <div class="box_image">
-          <img class="cover" src="images/ironmouse.jpg" alt="KING" />
-        </div>
-
-        <div>
-          <div class="name">KING</div>
-          <div class="author">Ironmouse</div>
-          <div class="auditions">13000 прослушиваний</div>
-        </div>
-      </div>
-
-      <div class="box">
-        <div class="box_image">
-          <img class="cover" src="images/lida.png" alt="Район" />
-        </div>
-
-        <div>
-          <div class="name">Район</div>
-          <div class="author">Lida</div>
-          <div class="auditions">9000 прослушиваний</div>
-        </div>
-      </div>
-
-      <div class="box">
-        <div class="box_image">
-          <img class="cover" src="images/radio_tapok.jpg" alt="Высота 776" />
-        </div>
-
-        <div>
-          <div class="name">Высота 776</div>
-          <div class="author">Radio Tapok</div>
-          <div class="auditions">100000 прослушиваний</div>
-        </div>
-      </div>
+      <div class="container"></div>
     </main>
 
     <aside class="accordion">
@@ -111,5 +41,7 @@
     <footer class="footer">
       <p class="mark">© 2022 Spotify AB</p>
     </footer>
+
+    <script async src="./script.js"></script>
   </body>
 </html>
