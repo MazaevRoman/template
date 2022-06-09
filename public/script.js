@@ -1,8 +1,11 @@
 let check = 0;
-const INITURL = new URL("https://ws.audioscrobbler.com/2.0/");
+const URLINIT = new URL("https://ws.audioscrobbler.com/2.0/");
 const CONTAINER = document.querySelector(".container");
 const SEARCHBAR = document.querySelector(".search-bar");
 
+/**
+ * Название трека и исполнителя
+ */
 function createNameItem(item) {
     const ITEMNAME = document.createElement("summary");
     ITEMNAME.className = "description_card";
@@ -10,6 +13,9 @@ function createNameItem(item) {
     return ITEMNAME;
 }
 
+/**
+ * Формирование оболочки для ссылки на исполнителя
+ */
 function createPerformerLink(item) {
     const PERFORMERLINK = document.createElement("a");
     PERFORMERLINK.className = "link_source";
@@ -19,24 +25,37 @@ function createPerformerLink(item) {
     return PERFORMERLINK;
 }
 
+/**
+ * Формирование имени исполнителя
+ */
 function createPerformer(item) {
     const PERFORMER = document.createElement("li");
     PERFORMER.textContent = "Исполнитель: " + item.artist.name;
     return PERFORMER;
 }
 
+
+/**
+ * Формирование листа с информацией о треке или исполнителе
+ */
 function createList() {
     const LISTCARD = document.createElement("ul");
     LISTCARD.className = "list_card";
     return LISTCARD;
 }
 
+/**
+ * Формирование поля с кол-вом прослушиваний трека или исполнителя
+ */
 function createAuditions(item) {
     const AUDITIONS = document.createElement("li");
     AUDITIONS.textContent = "Прослушивания: " + item.playcount;
     return AUDITIONS;
 }
 
+/**
+ * Формирование оболочки для ссылки на трек или исполнителя
+ */
 function createLink(item) {
     const TRACKLINK = document.createElement("a");
     TRACKLINK.className = "link_source";
@@ -46,24 +65,40 @@ function createLink(item) {
     return TRACKLINK;
 }
 
+/**
+ * Формирование поля с ссылкой на Last FM
+ */
 function createLastFMLink() {
     const LASTFMLINK = document.createElement("li");
     LASTFMLINK.textContent = "Подробнее на Last FM...";
     return LASTFMLINK;
 }
 
-SEARCHBAR.addEventListener("keydown", (event) => {
+/**
+ * Обработчик события поиска по треку или исполнителю
+ */
+function addEvent(){
+    SEARCHBAR.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         if (event.target.value === "") {
-            setTopMusicSettings();
+            switch (check) {
+                case 0:
+                    setTopMusic();
+                    break;
+                case 1:
+                    setTopPerformer();
+                    break;
+                default:
+                    break;
+            }
         }
         else {
             switch (check) {
                 case 0:
-                    setSearchedMusicSettings(event.target.value);
+                    setSearchedMusic(event.target.value);
                     break;
                 case 1:
-                    setSearchedArtistsSettings(event.target.value);
+                    setSearchedPerformer(event.target.value);
                     break;
                 default:
                     break;
@@ -71,7 +106,11 @@ SEARCHBAR.addEventListener("keydown", (event) => {
         }
     }
 });
+}
 
+/**
+ * Очистка контейнера
+ */
 function clearContainer() {
     if (CONTAINER.firstChild) {
       while (CONTAINER.firstChild) {
@@ -80,15 +119,14 @@ function clearContainer() {
     }
 }
 
-function setTopMusicSettings() {
+/**
+ * Очистка контейнера, установка параметров и последующий GET-запрос формирующий список лучших треков
+ */
+function setTopMusic() {
     clearContainer();
-    INITURL.search = "?method=chart.gettoptracks&api_key=1eb25db4baa96f9d49e827d603c2b54f&format=json";
+    URLINIT.search = "?method=chart.gettoptracks&api_key=1eb25db4baa96f9d49e827d603c2b54f&format=json";
     check = 0;
-    getTopMusic();
-}
-
-function getTopMusic() {
-    fetch(INITURL)
+    fetch(URLINIT)
       .then((result) => result.json())
       .then((data) =>
         data.tracks.track.forEach((track) => {
@@ -109,14 +147,13 @@ function getTopMusic() {
     );
 }
 
-function setSearchedMusicSettings(val) {
+/**
+ * Очистка контейнера, установка параметров и последующий GET-запрос для поиска по трекам
+ */
+function setSearchedMusic(val) {
     clearContainer();
-    INITURL.search = `?method=track.search&limit=50&track=${val}&api_key=1eb25db4baa96f9d49e827d603c2b54f&format=json`;
-    getSearchedMusic();
-}
-
-function getSearchedMusic() {
-    fetch(INITURL)
+    URLINIT.search = `?method=track.search&limit=50&track=${val}&api_key=1eb25db4baa96f9d49e827d603c2b54f&format=json`;
+    fetch(URLINIT)
       .then((result) => result.json())
       .then((data) =>
         data.results.trackmatches.track.forEach((track) => {
@@ -133,15 +170,14 @@ function getSearchedMusic() {
     );
 }
 
-function setTopArtistsSettings() {
+/**
+ * Очистка контейнера, установка параметров и последующий GET-запрос формирующий список лучших исполнителей
+ */
+function setTopPerformer() {
     clearContainer();
-    INITURL.search = "?method=chart.gettopartists&api_key=1eb25db4baa96f9d49e827d603c2b54f&format=json";
+    URLINIT.search = "?method=chart.gettopartists&api_key=1eb25db4baa96f9d49e827d603c2b54f&format=json";
     check = 1;
-    getTopArtists();
-}
-
-function getTopArtists() {
-    fetch(INITURL)
+    fetch(URLINIT)
       .then((result) => result.json())
       .then((data) =>
         data.artists.artist.forEach((artist) => {
@@ -159,14 +195,13 @@ function getTopArtists() {
     );
 }
 
-function setSearchedArtistsSettings(val) {
+/**
+ * Очистка контейнера, установка параметров и последующий GET-запрос для поиска по исполнителям
+ */
+function setSearchedPerformer(val) {
     clearContainer();
-    INITURL.search = `?method=artist.search&artist=${val}&api_key=1eb25db4baa96f9d49e827d603c2b54f&format=json`;
-    getSearchedArtists();
-}
-
-function getSearchedArtists() {
-    fetch(INITURL)
+    URLINIT.search = `?method=artist.search&artist=${val}&api_key=1eb25db4baa96f9d49e827d603c2b54f&format=json`;
+    fetch(URLINIT)
       .then((result) => result.json())
       .then((data) =>
         data.results.artistmatches.artist.forEach((artist) => {
@@ -183,4 +218,5 @@ function getSearchedArtists() {
     );
 }
 
-setTopMusicSettings();
+addEvent();
+setTopMusic();
