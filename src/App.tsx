@@ -1,23 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Footer from './componets/Footer';
+import Header from './componets/Header';
+import Main from './componets/Main';
+import Aside from './componets/Aside';
+import { MyContext } from './Context';
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
+function App() {
+    const [music, setMusic] = useState(true);
+    const [request, setRequest] = useState("");
+    const provider = React.useMemo(() => ({
+        music, 
+        setMusic,
+        request, 
+        setRequest,
+    }), [music, request]);
 
-// export default App;
+    return (
+        <div className="app">
+            <MyContext.Provider value={provider}>
+                <Header />
+                <Main/>
+                <Aside />
+            </MyContext.Provider>
+            <Footer />
+        </div>
+    );
+}
+
+export default App;
